@@ -13,7 +13,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
-                .addServersItem(new Server().url("/api"))
+                .addServersItem(new Server().url(""))
                 /// [현재 Swagger UI가 열려 있는 주소]
                 /// = 도메인 + 포트
                 /// +
