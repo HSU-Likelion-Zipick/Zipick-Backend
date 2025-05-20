@@ -15,5 +15,6 @@ public class Transport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //이동수단 id
 
+    @NotNull
     private String transport; //아동 수단
 }
