@@ -68,9 +68,10 @@ public class UserHouseInfo {
     @NotNull
     private int rank; //GPT가 뽑은 순위
 
-    @OneToMany(mappedBy = "userHouseInfo")
+    @OneToMany(mappedBy = "userHouseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserCharge> userCharges = new ArrayList<>();
-
-    @OneToMany(mappedBy = "userHouseInfo")
+    //cascade = CascadeType.ALL -> 부모 엔티티 저장/수정/삭제 시 자식 엔티티에도 작업 전파
+    //orphanRemoval = true -> 부모 엔티티의 컬렉션에서 자식 엔티티가 제거되면 DB에서도 자동 삭제
+    @OneToMany(mappedBy = "userHouseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserOption> userOptions = new ArrayList<>();
 }

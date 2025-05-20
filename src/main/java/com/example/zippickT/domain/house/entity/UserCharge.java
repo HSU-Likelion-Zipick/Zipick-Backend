@@ -19,7 +19,7 @@ public class UserCharge {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userHouuseInfo_id")
+    @JoinColumn(name = "userHouseInfo_id")
     private UserHouseInfo userHouseInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
