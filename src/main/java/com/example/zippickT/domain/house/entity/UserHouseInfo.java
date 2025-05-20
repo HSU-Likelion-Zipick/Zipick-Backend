@@ -1,5 +1,6 @@
 package com.example.zippickT.domain.house.entity;
 
+import com.example.zippickT.domain.User.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -73,4 +74,8 @@ public class UserHouseInfo {
 
     @OneToMany(mappedBy = "userHouseInfo")
     private List<UserOption> userOptions = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 }
