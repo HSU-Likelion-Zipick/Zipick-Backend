@@ -1,11 +1,11 @@
 package com.example.zippickT.domain.house.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -67,4 +67,7 @@ public class UserHouseInfo {
 
     @NotNull
     private int rank; //GPT가 뽑은 순위
+
+    @OneToMany(mappedBy = "userHouseInfo")
+    private List<UserCharge> userCharges = new ArrayList<>();
 }

@@ -21,4 +21,8 @@ public class UserCharge {
     @JoinColumn(name = "userHouuseInfo_id")
     private UserHouseInfo userHouseInfo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "charge_id")
+    private Charge charge;
+
 }
