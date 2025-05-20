@@ -17,7 +17,7 @@ public class UserHouseInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id; //사용자 집 정보ID
+    private Long id; //사용자 집 정보ID
 
     @NotNull
     private String houseName; //사용자가 입력한 집의 이름
@@ -70,4 +70,7 @@ public class UserHouseInfo {
 
     @OneToMany(mappedBy = "userHouseInfo")
     private List<UserCharge> userCharges = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userHouseInfo")
+    private List<UserOption> userOptions = new ArrayList<>();
 }
