@@ -1,5 +1,6 @@
 package com.example.zippickT.domain.house.entity;
 
+import com.example.zippickT.domain.User.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -74,4 +75,8 @@ public class UserHouseInfo {
     //orphanRemoval = true -> 부모 엔티티의 컬렉션에서 자식 엔티티가 제거되면 DB에서도 자동 삭제
     @OneToMany(mappedBy = "userHouseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserOption> userOptions = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 }
