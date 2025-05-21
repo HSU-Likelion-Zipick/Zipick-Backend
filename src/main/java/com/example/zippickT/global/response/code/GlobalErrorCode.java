@@ -3,7 +3,8 @@ package com.example.zippickT.global.response.code;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static com.likelion.demo.global.constant.StaticValue.*;
+import static com.example.zippickT.global.constant.StaticValue.*;
+
 
 @Getter
 @AllArgsConstructor

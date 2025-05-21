@@ -1,6 +1,6 @@
 package com.example.zippickT.global.response;
 
-import com.likelion.demo.global.response.code.BaseResponseCode;
+import com.example.zippickT.global.response.code.BaseResponseCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

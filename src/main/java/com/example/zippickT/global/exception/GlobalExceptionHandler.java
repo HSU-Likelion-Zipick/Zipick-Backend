@@ -1,7 +1,7 @@
 package com.example.zippickT.global.exception;
 
-import com.likelion.demo.global.response.ErrorResponse;
-import com.likelion.demo.global.response.code.GlobalErrorCode;
+import com.example.zippickT.global.response.ErrorResponse;
+import com.example.zippickT.global.response.code.GlobalErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
