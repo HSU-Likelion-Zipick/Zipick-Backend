@@ -1,6 +1,6 @@
 package com.example.zippickT.global.exception;
 
-import com.likelion.demo.global.response.code.BaseResponseCode;
+import com.example.zippickT.global.response.code.BaseResponseCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
