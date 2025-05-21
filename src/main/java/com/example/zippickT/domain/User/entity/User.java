@@ -37,10 +37,6 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private Transport transport;
-
-    @Enumerated(EnumType.STRING)
-    @NotNull
     private LifeStyle lifestyle_pattern; //생활패턴
 
 
