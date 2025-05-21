@@ -7,6 +7,7 @@ import com.example.zippickT.domain.User.web.dto.CreateUserRes;
 import com.example.zippickT.global.response.SuccessResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,9 @@ public class UserController {
     ){
         CreateUserRes createUserRes = userService.createUser(createUserReq);
 
-        return null;
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(SuccessResponse.created(createUserRes));
     }
 
 }
