@@ -1,5 +1,6 @@
 package com.example.zippickT.domain.house.entity;
 
+import com.example.zippickT.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserOption {
+public class UserOption extends BaseEntity {
 
     //Option과 UserHouseInfo의 다대다를 풀기위한 중간 매핑 테이블
 

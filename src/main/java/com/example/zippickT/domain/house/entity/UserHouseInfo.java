@@ -1,6 +1,7 @@
 package com.example.zippickT.domain.house.entity;
 
 import com.example.zippickT.domain.User.entity.User;
+import com.example.zippickT.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserHouseInfo {
+public class UserHouseInfo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +67,6 @@ public class UserHouseInfo {
     @NotNull
     private int floor; //원하는 층수
 
-    @NotNull
     private int rank; //GPT가 뽑은 순위
 
     @OneToMany(mappedBy = "userHouseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
