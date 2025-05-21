@@ -7,7 +7,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum UserErrorCode implements BaseResponseCode {
-    TRANSPORT_NOT_FOUND_404("TRANSPORT_NOT_FOUND_404",404,"해당 이동수단이 존재하지 않습니다." );
+    TRANSPORT_NOT_FOUND_404("TRANSPORT_NOT_FOUND_404",404,"유효하지 않는 이동수단입니다." ),
+    GENDER_NOT_FOUND_404("GENDER_NOT_FOUND_404", 404, "유효하지 않는 성별입니다."),
+    JOB_NOT_FOUND_404("JOB_NOT_FOUND_404", 404, "유효하지 않는 직업입니다." ),
+    LIFESTYLE_NOT_FOUND_404("LIFESTYLE_NOT_FOUND_404", 404, "유효하지 않는 생활패턴입니다.");
+
 
     private final String code;
     private final int httpStatus;
