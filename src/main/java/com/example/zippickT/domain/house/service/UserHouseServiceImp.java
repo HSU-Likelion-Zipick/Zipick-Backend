@@ -1,6 +1,6 @@
 package com.example.zippickT.domain.house.service;
 
-import com.example.zippickT.domain.User.entity.User;
+import com.example.zippickT.domain.User.entity.Member;
 import com.example.zippickT.domain.User.exception.UserNotFoundException;
 import com.example.zippickT.domain.User.repository.UserRepository;
 import com.example.zippickT.domain.house.entity.*;
@@ -17,19 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserHouseServiceImp implements UserHouseService {
     private ChargeRepository chargeRepository;
-    private OptionRepository optionRepository;
+    private HouseOptionRepository houseOptionRepository;
     private UserHouseInfoRepository userHouseInfoRepository;
     private UserRepository userRepository;
 
     @Override
     @Transactional
     public CreateHouseDataRes save(Long userId, CreateHouseDataReq createHouseDataReq) {
-
-        //유저가 실제로 존재하는지 확인
-        User user = userRepository.findById(userId)
+        Member member = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         UserHouseInfo userHouseInfo = UserHouseInfo.builder()
-                .user(user)
+                .member(member)
                 .houseName(createHouseDataReq.getHouseName())
                 .kind(createHouseDataReq.getKind())
                 .size(createHouseDataReq.getManagement())
@@ -45,7 +43,6 @@ public class UserHouseServiceImp implements UserHouseService {
                 .floor(createHouseDataReq.getFloor())
                 .build();
 
-        //Charge DB에 유저가 입력한 ChargeName이 존재하는지 확인
         for(String chargeName : createHouseDataReq.getSelectedCharges()){
             Charge charge = chargeRepository.findByChargeName(chargeName)
                     .orElseThrow(ChargeNotFoundException::new);
@@ -56,18 +53,17 @@ public class UserHouseServiceImp implements UserHouseService {
             userHouseInfo.getUserCharges().add(userCharge);
         }
 
-        //Option DB에 유저가 입력한 OptionName이 존재하는지 확인
         for(String optionName: createHouseDataReq.getSelectedOptions()){
-            Option option = optionRepository.findByOptionName(optionName)
+            HouseOption option = houseOptionRepository.findByOptionName(optionName)
                     .orElseThrow(OptionNotFoundException::new);
             UserOption userOption = new UserOption();
             userOption.setUserHouseInfo(userHouseInfo);
-            userOption.setOption(option);
+            userOption.setHouseOption(option);
 
             userHouseInfo.getUserOptions().add(userOption);
         }
         UserHouseInfo res = userHouseInfoRepository.save(userHouseInfo);
-        return new CreateHouseDataRes(res.getId(),res.getUser().getId());
+        return new CreateHouseDataRes(res.getId(),res.getMember().getId());
     }
     //Reposity 가져와서 의존성 주입해야함.
 }
