@@ -1,6 +1,5 @@
 package com.example.zippickT.global.response;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.example.zippickT.global.response.code.BaseResponseCode;
 import lombok.Builder;
 import lombok.Getter;
