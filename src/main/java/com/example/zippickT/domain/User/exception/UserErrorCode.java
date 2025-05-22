@@ -8,6 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserErrorCode implements BaseResponseCode {
     TRANSPORT_NOT_FOUND_404("TRANSPORT_NOT_FOUND_404",404,"해당 이동수단이 존재하지 않습니다." );
+    USER_NOT_FOUND_404("USER_NOT_FOUND_404",404,"유저를 찾을 수 없습니다.");
+
 
     private final String code;
     private final int httpStatus;

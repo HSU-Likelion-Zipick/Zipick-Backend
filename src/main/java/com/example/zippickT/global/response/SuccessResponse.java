@@ -1,8 +1,9 @@
 package com.example.zippickT.global.response;
 
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.example.zippickT.global.response.code.BaseResponseCode;
 import com.example.zippickT.global.response.code.GlobalSuccessCode;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
