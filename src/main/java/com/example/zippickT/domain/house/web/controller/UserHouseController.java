@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
+
 public class UserHouseController {
-    private UserHouseService userHouseService;
+    private final UserHouseService userHouseService;
     //UserHouseService 떼어와서 의존성주입해야함
 
     @PostMapping("/{user_id}/HouseData")

@@ -4,6 +4,7 @@ import com.example.zippickT.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Entity
 @Getter
 @Setter

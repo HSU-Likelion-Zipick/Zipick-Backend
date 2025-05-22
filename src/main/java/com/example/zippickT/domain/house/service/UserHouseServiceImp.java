@@ -16,10 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class UserHouseServiceImp implements UserHouseService {
-    private ChargeRepository chargeRepository;
-    private HouseOptionRepository houseOptionRepository;
-    private UserHouseInfoRepository userHouseInfoRepository;
-    private UserRepository userRepository;
+    private final ChargeRepository chargeRepository;
+    private final HouseOptionRepository houseOptionRepository;
+    private final UserHouseInfoRepository userHouseInfoRepository;
+    private final UserRepository userRepository;
+    private final UserChargeRepository userChargeRepository;
+    private final UserOptionRepository userOptionRepository;
 
     @Override
     @Transactional
@@ -43,14 +45,16 @@ public class UserHouseServiceImp implements UserHouseService {
                 .floor(createHouseDataReq.getFloor())
                 .build();
 
+        UserHouseInfo res = userHouseInfoRepository.save(userHouseInfo);
+
         for(String chargeName : createHouseDataReq.getSelectedCharges()){
             Charge charge = chargeRepository.findByChargeName(chargeName)
                     .orElseThrow(ChargeNotFoundException::new);
             UserCharge userCharge = new UserCharge();
             userCharge.setUserHouseInfo(userHouseInfo);
             userCharge.setCharge(charge);
+            userChargeRepository.save(userCharge);
 
-            userHouseInfo.getUserCharges().add(userCharge);
         }
 
         for(String optionName: createHouseDataReq.getSelectedOptions()){
@@ -59,10 +63,10 @@ public class UserHouseServiceImp implements UserHouseService {
             UserOption userOption = new UserOption();
             userOption.setUserHouseInfo(userHouseInfo);
             userOption.setHouseOption(option);
+            userOptionRepository.save(userOption);
 
-            userHouseInfo.getUserOptions().add(userOption);
         }
-        UserHouseInfo res = userHouseInfoRepository.save(userHouseInfo);
+
         return new CreateHouseDataRes(res.getId(),res.getMember().getId());
     }
     //Reposity 가져와서 의존성 주입해야함.
