@@ -63,7 +63,7 @@ public class UserHouseServiceImp implements UserHouseService {
             userHouseInfo.getUserOptions().add(userOption);
         }
         UserHouseInfo res = userHouseInfoRepository.save(userHouseInfo);
-        return new CreateHouseDataRes(res.getId());
+        return new CreateHouseDataRes(res.getId(),res.getUser().getId());
     }
     //Reposity 가져와서 의존성 주입해야함.
 }

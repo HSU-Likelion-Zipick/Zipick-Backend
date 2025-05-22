@@ -1,6 +1,7 @@
 package com.example.zippickT.domain.house.web.dto;
 
 public record CreateHouseDataRes(
-        Long id
+        Long userHouseInfo_id,
+        Long user_id
 ) {
 }
