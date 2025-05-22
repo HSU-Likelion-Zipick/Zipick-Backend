@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface OptionRepository extends JpaRepository<HouseOption, Long> {
+public interface HouseOptionRepository extends JpaRepository<HouseOption, Long> {
     Optional<HouseOption> findByOptionName(String optionName);
 }
