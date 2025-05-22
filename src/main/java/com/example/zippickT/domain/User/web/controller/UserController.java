@@ -1,6 +1,5 @@
 package com.example.zippickT.domain.User.web.controller;
 
-import com.example.zippickT.domain.User.entity.User;
 import com.example.zippickT.domain.User.service.UserService;
 import com.example.zippickT.domain.User.web.dto.CreateUserReq;
 import com.example.zippickT.domain.User.web.dto.CreateUserRes;

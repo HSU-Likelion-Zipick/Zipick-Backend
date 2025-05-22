@@ -1,6 +1,6 @@
 package com.example.zippickT.domain.house.service;
 
-import com.example.zippickT.domain.User.entity.User;
+import com.example.zippickT.domain.User.entity.Member;
 import com.example.zippickT.domain.User.exception.UserNotFoundException;
 import com.example.zippickT.domain.User.repository.UserRepository;
 import com.example.zippickT.domain.house.entity.*;
@@ -24,10 +24,10 @@ public class UserHouseServiceImp implements UserHouseService {
     @Override
     @Transactional
     public CreateHouseDataRes save(Long userId, CreateHouseDataReq createHouseDataReq) {
-        User user = userRepository.findById(userId)
+        Member member = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         UserHouseInfo userHouseInfo = UserHouseInfo.builder()
-                .user(user)
+                .member(member)
                 .houseName(createHouseDataReq.getHouseName())
                 .kind(createHouseDataReq.getKind())
                 .size(createHouseDataReq.getManagement())
@@ -54,16 +54,16 @@ public class UserHouseServiceImp implements UserHouseService {
         }
 
         for(String optionName: createHouseDataReq.getSelectedOptions()){
-            Option option = optionRepository.findByOptionName(optionName)
+            HouseOption houseOption = optionRepository.findByOptionName(optionName)
                     .orElseThrow(OptionNotFoundException::new);
             UserOption userOption = new UserOption();
             userOption.setUserHouseInfo(userHouseInfo);
-            userOption.setOption(option);
+            userOption.setHouseOption(houseOption);
 
             userHouseInfo.getUserOptions().add(userOption);
         }
         UserHouseInfo res = userHouseInfoRepository.save(userHouseInfo);
-        return new CreateHouseDataRes(res.getId(),res.getUser().getId());
+        return new CreateHouseDataRes(res.getId(),res.getMember().getId());
     }
     //Reposity 가져와서 의존성 주입해야함.
 }

@@ -1,10 +1,10 @@
 package com.example.zippickT.domain.house.repository;
 
-import com.example.zippickT.domain.house.entity.Option;
+import com.example.zippickT.domain.house.entity.HouseOption;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface OptionRepository extends JpaRepository<Option, Long> {
-    Optional<Option> findByOptionName(String optionName);
+public interface OptionRepository extends JpaRepository<HouseOption, Long> {
+    Optional<HouseOption> findByOptionName(String optionName);
 }

@@ -1,6 +1,6 @@
 package com.example.zippickT.domain.house.entity;
 
-import com.example.zippickT.domain.User.entity.User;
+import com.example.zippickT.domain.User.entity.Member;
 import com.example.zippickT.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -67,7 +67,7 @@ public class UserHouseInfo extends BaseEntity {
     @NotNull
     private int floor; //원하는 층수
 
-    private int rank; //GPT가 뽑은 순위
+    private int ranking; //GPT가 뽑은 순위
 
     @OneToMany(mappedBy = "userHouseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserCharge> userCharges = new ArrayList<>();
@@ -78,5 +78,5 @@ public class UserHouseInfo extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
-    private User user;
+    private Member member;
 }

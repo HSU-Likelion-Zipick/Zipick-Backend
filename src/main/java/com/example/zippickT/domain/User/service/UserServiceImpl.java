@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             throw new LifeStyleNotFoundException();
         }
 
-        User user = User.builder()
+        Member member = Member.builder()
                 .nickname(createUserReq.getNickname())
                 .sex(gender)
                 .age(createUserReq.getAge())
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
                 .lifestyle_pattern(lifeStyle)
                 .build();
 
-        User savedUser = userRepository.save(user);
-        return new CreateUserRes(savedUser.getId());
+        Member savedMember = userRepository.save(member);
+        return new CreateUserRes(savedMember.getId());
     }
 }
