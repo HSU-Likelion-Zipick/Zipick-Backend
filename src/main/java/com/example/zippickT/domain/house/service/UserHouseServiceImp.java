@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserHouseServiceImp implements UserHouseService {
     private ChargeRepository chargeRepository;
-    private OptionRepository optionRepository;
+    private HouseOptionRepository houseOptionRepository;
     private UserHouseInfoRepository userHouseInfoRepository;
     private UserRepository userRepository;
 
@@ -58,7 +58,7 @@ public class UserHouseServiceImp implements UserHouseService {
 
         //Option DB에 유저가 입력한 OptionName이 존재하는지 확인
         for(String optionName: createHouseDataReq.getSelectedOptions()){
-            Option option = optionRepository.findByOptionName(optionName)
+            HouseOption option = houseOptionRepository.findByOptionName(optionName)
                     .orElseThrow(OptionNotFoundException::new);
             UserOption userOption = new UserOption();
             userOption.setUserHouseInfo(userHouseInfo);

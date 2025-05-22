@@ -24,5 +24,5 @@ public class UserOption extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "option_id")
-    private Option option;
+    private HouseOption option;
 }
