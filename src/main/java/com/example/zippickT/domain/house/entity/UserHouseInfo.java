@@ -67,7 +67,7 @@ public class UserHouseInfo extends BaseEntity {
     @NotNull
     private int floor; //원하는 층수
 
-    private int rank; //GPT가 뽑은 순위
+    private int ranking; //GPT가 뽑은 순위
 
     @OneToMany(mappedBy = "userHouseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserCharge> userCharges = new ArrayList<>();
