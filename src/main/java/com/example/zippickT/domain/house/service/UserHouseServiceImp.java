@@ -24,6 +24,8 @@ public class UserHouseServiceImp implements UserHouseService {
     @Override
     @Transactional
     public CreateHouseDataRes save(Long userId, CreateHouseDataReq createHouseDataReq) {
+
+        //유저가 실제로 존재하는지 확인
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         UserHouseInfo userHouseInfo = UserHouseInfo.builder()
@@ -43,6 +45,7 @@ public class UserHouseServiceImp implements UserHouseService {
                 .floor(createHouseDataReq.getFloor())
                 .build();
 
+        //Charge DB에 유저가 입력한 ChargeName이 존재하는지 확인
         for(String chargeName : createHouseDataReq.getSelectedCharges()){
             Charge charge = chargeRepository.findByChargeName(chargeName)
                     .orElseThrow(ChargeNotFoundException::new);
@@ -53,6 +56,7 @@ public class UserHouseServiceImp implements UserHouseService {
             userHouseInfo.getUserCharges().add(userCharge);
         }
 
+        //Option DB에 유저가 입력한 OptionName이 존재하는지 확인
         for(String optionName: createHouseDataReq.getSelectedOptions()){
             Option option = optionRepository.findByOptionName(optionName)
                     .orElseThrow(OptionNotFoundException::new);
