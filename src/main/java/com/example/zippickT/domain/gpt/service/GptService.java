@@ -10,7 +10,7 @@ import java.util.List;
 public interface GptService {
     List<SimilarUserReq> getSimilarUser(Long userId);
 
-    List<SimilarUserHouseRes> getSimilarUserHouseData();
+    List<SimilarUserHouseRes> getSimilarUserHouseData(List<SimilarUserReq> similarUsers);
 
 
 }

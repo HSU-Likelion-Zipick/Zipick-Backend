@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -99,8 +100,31 @@ public class GptServiceImpl implements GptService {
     }
 
     @Override
-    public List<SimilarUserHouseRes> getSimilarUserHouseData() {
-        return List.of();
+    public List<SimilarUserHouseRes> getSimilarUserHouseData(List<SimilarUserReq> similarUsers) {
+        List<SimilarUserHouseRes> similarUserHouseResList = new ArrayList<>();
+
+        for(int i=0;i<similarUsers.size();i++) {
+            Member member = userRepository.findById(similarUsers.get(i).getId())
+                    .orElseThrow(UserNotFoundException::new);
+
+            userHouseInfoRepository.findByMemberId(member.getId()).stream()
+                    .filter(house -> house.getRanking() == 1)
+                    .findFirst() // 랭크 1이 여러개라면 첫번째만 가져옴
+                    .ifPresent(house -> {
+                        SimilarUserHouseRes res = new SimilarUserHouseRes(
+                                house.getHouseName(),
+                                house.getKind(),
+                                house.getSize(),
+                                house.getYear_rent(),
+                                house.getMonthly_rent(),
+                                house.getDeposit(),
+                                house.getManagement()
+                        );
+                        similarUserHouseResList.add(res);
+                    });
+
+        }
+        return similarUserHouseResList;
     }
 
 
