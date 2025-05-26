@@ -23,7 +23,14 @@ public class GptController {
     @GetMapping("/{user_id}/similar")
     public ResponseEntity<SuccessResponse<?>> similar(@PathVariable Long user_id) {
         List<SimilarUserReq> similarUsers = gptService.getSimilarUser(user_id);
+
+        //Test Log 확인용 코드
+        System.out.println("뽑아온 유저의 Id" + similarUsers);
+
         List<SimilarUserHouseRes> similarUserHouseResList = gptService.getSimilarUserHouseData(similarUsers);
+
+        //Test Log 확인용 코드
+        System.out.println("뽑아온 유저의 집 정보" +similarUserHouseResList);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(SuccessResponse.ok(similarUserHouseResList));

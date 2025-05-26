@@ -30,5 +30,8 @@ public class GptSimilarUserReq {
         private int reserve_money;
         private Transport transport;
         private LifeStyle lifestyle_pattern;
+//
+//        private List<String> charges;
+//        private List<String> options;
     }
 }

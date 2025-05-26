@@ -7,7 +7,7 @@ import com.example.zippickT.domain.User.repository.UserRepository;
 import com.example.zippickT.domain.gpt.web.dto.GptSimilarUserReq;
 import com.example.zippickT.domain.gpt.web.dto.SimilarUserHouseRes;
 import com.example.zippickT.domain.gpt.web.dto.SimilarUserReq;
-import com.example.zippickT.domain.house.repository.UserHouseInfoRepository;
+import com.example.zippickT.domain.house.repository.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +30,10 @@ public class GptServiceImpl implements GptService {
 
     private final UserRepository userRepository;
     private final UserHouseInfoRepository userHouseInfoRepository;
+    private final ChargeRepository chargeRepository;
+    private final UserChargeRepository userChargeRepository;
+    private final HouseOptionRepository houseOptionRepository;
+    private final UserOptionRepository userOptionRepository;
     private final RestTemplate restTemplate;
 
 
@@ -55,7 +59,7 @@ public class GptServiceImpl implements GptService {
         StringBuilder prompt = new StringBuilder();
         prompt.append("targetUser와 otherUsers는 사용자들의 정보입니다.\n")
                 .append("각 사용자는 성별, 나이, 직업, 월소득, 예비자금, 교통수단, 생활패턴 등의 데이터를 포함하고 있습니다.\n")
-                .append("targetUser와 가장 유사한 3명의 userId를 JSON 배열로만 반환해주세요. 예: [2, 5, 9]\n\n")
+                .append("targetUser와 가장 유사한 3명의 userId를 JSON 배열로만 반환해주세요. 형식은 무조건 [1, 2, 3] 이런 식의 JSON 배열만 출력하세요. 주석, 설명, 줄바꿈도 없이.\n 예: [2, 5, 9]\n\n")
                 .append("targetUser: ").append(gptSimilarUserReq.getTargetUser()).append("\n")
                 .append("otherUsers: ").append(gptSimilarUserReq.getOtherUsers());
 
@@ -87,8 +91,13 @@ public class GptServiceImpl implements GptService {
                     .path("message")
                     .path("content").asText();
 
+            //x테스트용 로그 코드
+            System.out.println("GPT가 반환한 답" + content);
+
             // 결과 문자열이 "[1,2,3]" 형태라고 가정
             List<Long> similarUserIds = mapper.readValue(content, new TypeReference<List<Long>>() {});
+
+            System.out.println("similarUserIds" + similarUserIds);
 
             return similarUserIds.stream()
                     .map(SimilarUserReq::new) // SimilarUserReq 생성자에 맞게 수정
@@ -101,16 +110,19 @@ public class GptServiceImpl implements GptService {
 
     @Override
     public List<SimilarUserHouseRes> getSimilarUserHouseData(List<SimilarUserReq> similarUsers) {
+        //
+        System.out.println("similarUsers가 제대로 왔는가" + similarUsers);
         List<SimilarUserHouseRes> similarUserHouseResList = new ArrayList<>();
 
         for(int i=0;i<similarUsers.size();i++) {
+            //Member가 존재하는지 검증
             Member member = userRepository.findById(similarUsers.get(i).getId())
                     .orElseThrow(UserNotFoundException::new);
 
             userHouseInfoRepository.findByMemberId(member.getId()).stream()
                     .filter(house -> house.getRanking() == 1)
                     .findFirst() // 랭크 1이 여러개라면 첫번째만 가져옴
-                    .ifPresent(house -> {
+                    .ifPresent(house -> { //rank == 1이 존재하면
                         SimilarUserHouseRes res = new SimilarUserHouseRes(
                                 house.getHouseName(),
                                 house.getKind(),
@@ -129,6 +141,13 @@ public class GptServiceImpl implements GptService {
 
 
     private GptSimilarUserReq.UserStatusDto toUserStatusDto(Member member){
+//        List<String> userCharges = userChargeRepository.findByMemberId(member.getId()).stream()
+//                .map(userCharge -> userCharge.getCharge().getChargeName())
+//                .collect(Collectors.toList());
+//
+//        List<String> userOptions = userOptionRepository.findByMemberId(member.getId()).stream()
+//                .map(userOption -> userOption.getHouseOption().getOptionName())
+//                .collect(Collectors.toList());
         return new GptSimilarUserReq.UserStatusDto(
                 member.getId(),
                 member.getSex(),
@@ -138,6 +157,8 @@ public class GptServiceImpl implements GptService {
                 member.getReserve_money(),
                 member.getTransport(),
                 member.getLifestyle_pattern()
+//                userCharges,
+//                userOptions
         );
     }
 
