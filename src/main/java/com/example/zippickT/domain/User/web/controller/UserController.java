@@ -3,6 +3,7 @@ package com.example.zippickT.domain.User.web.controller;
 import com.example.zippickT.domain.User.service.UserService;
 import com.example.zippickT.domain.User.web.dto.CreateUserReq;
 import com.example.zippickT.domain.User.web.dto.CreateUserRes;
+import com.example.zippickT.domain.User.web.dto.UserNickNameRes;
 import com.example.zippickT.global.response.SuccessResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,4 +31,13 @@ public class UserController {
                 .body(SuccessResponse.created(createUserRes));
     }
 
+    @GetMapping("/{user_id}")
+    public ResponseEntity<SuccessResponse<?>> getUserNickName(
+            @PathVariable Long user_id
+    ) {
+        UserNickNameRes userNicknameRes = userService.getNickName(user_id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.ok(userNicknameRes));
+    }
 }
