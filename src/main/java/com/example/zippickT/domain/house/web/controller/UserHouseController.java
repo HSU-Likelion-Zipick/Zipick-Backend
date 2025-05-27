@@ -1,6 +1,5 @@
 package com.example.zippickT.domain.house.web.controller;
 
-import com.example.zippickT.domain.house.entity.UserHouseInfo;
 import com.example.zippickT.domain.house.service.UserHouseService;
 import com.example.zippickT.domain.house.web.dto.CreateHouseDataReq;
 import com.example.zippickT.domain.house.web.dto.CreateHouseDataRes;
@@ -9,12 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 
