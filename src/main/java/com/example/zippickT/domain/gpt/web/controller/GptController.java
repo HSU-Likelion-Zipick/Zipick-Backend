@@ -1,20 +1,15 @@
 package com.example.zippickT.domain.gpt.web.controller;
 
 import com.example.zippickT.domain.gpt.service.GptRankingService;
-import com.example.zippickT.domain.gpt.service.GptRankingServiceImpl;
 import com.example.zippickT.domain.gpt.web.dto.GptHouseRankingRes;
 import com.example.zippickT.global.response.SuccessResponse;
 import com.example.zippickT.domain.gpt.service.GptSimilarService;
 import com.example.zippickT.domain.gpt.web.dto.SimilarUserHouseRes;
 import com.example.zippickT.domain.gpt.web.dto.SimilarUserReq;
-import com.example.zippickT.global.response.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +20,7 @@ public class GptController {
     private final GptRankingService gptRankingService;
     private final GptSimilarService gptSimilarService;
 
-    @GetMapping("/{user_id}/ranking")
+    @PutMapping("/{user_id}/ranking")
     public ResponseEntity<SuccessResponse<?>> houseRanking(@PathVariable Long user_id) {
         GptHouseRankingRes res = gptRankingService.recommendByGpt(user_id);
         return ResponseEntity
