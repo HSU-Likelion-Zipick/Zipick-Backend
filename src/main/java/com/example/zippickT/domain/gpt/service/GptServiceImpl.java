@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -30,11 +31,10 @@ public class GptServiceImpl implements GptService {
 
     private final UserRepository userRepository;
     private final UserHouseInfoRepository userHouseInfoRepository;
-    private final ChargeRepository chargeRepository;
-    private final UserChargeRepository userChargeRepository;
-    private final HouseOptionRepository houseOptionRepository;
-    private final UserOptionRepository userOptionRepository;
     private final RestTemplate restTemplate;
+
+    @Value("${openai.api.url}")
+    private String gptUrl;
 
 
     @Override
@@ -59,7 +59,7 @@ public class GptServiceImpl implements GptService {
         StringBuilder prompt = new StringBuilder();
         prompt.append("targetUser와 otherUsers는 사용자들의 정보입니다.\n")
                 .append("각 사용자는 성별, 나이, 직업, 월소득, 예비자금, 교통수단, 생활패턴 등의 데이터를 포함하고 있습니다.\n")
-                .append("targetUser와 가장 유사한 3명의 userId를 JSON 배열로만 반환해주세요. 형식은 무조건 [1, 2, 3] 이런 식의 JSON 배열만 출력하세요. 주석, 설명, 줄바꿈도 없이.\n 예: [2, 5, 9]\n\n")
+                .append("targetUser와 가장 유사한 3명의 userId를 JSON 배열로만 반환해주세요.주석, 설명, 줄바꿈도 없이 형식은 무조건 [1, 2, 3] 이런 식의 JSON 배열만 출력하세요.\n 예: [2, 5, 9]\n\n")
                 .append("targetUser: ").append(gptSimilarUserReq.getTargetUser()).append("\n")
                 .append("otherUsers: ").append(gptSimilarUserReq.getOtherUsers());
 
@@ -70,28 +70,31 @@ public class GptServiceImpl implements GptService {
 
         ObjectNode requestBody = mapper.createObjectNode();
         requestBody.put("model", "gpt-4");
+
         ArrayNode messages = mapper.createArrayNode();
         ObjectNode userMessage = mapper.createObjectNode();
+
         userMessage.put("role", "user");
         userMessage.put("content", prompt.toString());
+
         messages.add(userMessage);
         requestBody.set("messages", messages);
 
         HttpEntity<String> request = new HttpEntity<>(requestBody.toString(), headers);
 
         // OpenAI Chat API 호출
-        String gptUrl = "https://api.openai.com/v1/chat/completions";
         String response = restTemplate.postForObject(gptUrl, request, String.class);
-
+        System.out.println(response);
         // 응답에서 유사 userId 추출
         try {
+            //JsonNode 객체 리턴
             JsonNode jsonResponse = mapper.readTree(response);
             String content = jsonResponse
                     .path("choices").get(0)
                     .path("message")
                     .path("content").asText();
 
-            //x테스트용 로그 코드
+            //테스트용 로그 코드
             System.out.println("GPT가 반환한 답" + content);
 
             // 결과 문자열이 "[1,2,3]" 형태라고 가정
@@ -141,13 +144,6 @@ public class GptServiceImpl implements GptService {
 
 
     private GptSimilarUserReq.UserStatusDto toUserStatusDto(Member member){
-//        List<String> userCharges = userChargeRepository.findByMemberId(member.getId()).stream()
-//                .map(userCharge -> userCharge.getCharge().getChargeName())
-//                .collect(Collectors.toList());
-//
-//        List<String> userOptions = userOptionRepository.findByMemberId(member.getId()).stream()
-//                .map(userOption -> userOption.getHouseOption().getOptionName())
-//                .collect(Collectors.toList());
         return new GptSimilarUserReq.UserStatusDto(
                 member.getId(),
                 member.getSex(),
@@ -157,8 +153,6 @@ public class GptServiceImpl implements GptService {
                 member.getReserve_money(),
                 member.getTransport(),
                 member.getLifestyle_pattern()
-//                userCharges,
-//                userOptions
         );
     }
 
