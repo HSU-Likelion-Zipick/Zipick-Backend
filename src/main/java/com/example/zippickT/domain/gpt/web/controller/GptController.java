@@ -1,5 +1,9 @@
 package com.example.zippickT.domain.gpt.web.controller;
 
+import com.example.zippickT.domain.gpt.service.GptRankingService;
+import com.example.zippickT.domain.gpt.service.GptRankingServiceImpl;
+import com.example.zippickT.domain.gpt.web.dto.GptHouseRankingRes;
+import com.example.zippickT.global.response.SuccessResponse;
 import com.example.zippickT.domain.gpt.service.GptService;
 import com.example.zippickT.domain.gpt.web.dto.SimilarUserHouseRes;
 import com.example.zippickT.domain.gpt.web.dto.SimilarUserReq;
@@ -18,7 +22,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/gpt")
 public class GptController {
+    private final GptRankingService gptRankingService;
     private final GptService gptService;
+
+    @GetMapping("/{user_id}/ranking")
+    public ResponseEntity<SuccessResponse<?>> houseRanking(@PathVariable Long user_id) {
+        GptHouseRankingRes res = gptRankingService.recommendByGpt(user_id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.ok(res));
+    }
+
 
     @GetMapping("/{user_id}/similar")
     public ResponseEntity<SuccessResponse<?>> similar(@PathVariable Long user_id) {

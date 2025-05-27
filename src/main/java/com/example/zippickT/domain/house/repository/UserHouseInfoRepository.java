@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface UserHouseInfoRepository extends JpaRepository<UserHouseInfo, Long> {
-    List<UserHouseInfo> findByMemberId(Long id);
+    List<UserHouseInfo> findByMemberId(Long userId);
 }
