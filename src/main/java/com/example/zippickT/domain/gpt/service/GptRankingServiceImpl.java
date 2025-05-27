@@ -4,7 +4,7 @@ import com.example.zippickT.domain.User.entity.Member;
 import com.example.zippickT.domain.User.exception.UserNotFoundException;
 import com.example.zippickT.domain.User.repository.UserRepository;
 import com.example.zippickT.domain.gpt.exception.NotInsertYearMonthlyMoneyException;
-import com.example.zippickT.domain.gpt.exception.TranslationHouseNotFoundException;
+import com.example.zippickT.domain.gpt.exception.RecommendationHouseNotFoundException;
 import com.example.zippickT.domain.gpt.web.dto.GptHouseRankingRes;
 import com.example.zippickT.domain.house.entity.UserHouseInfo;
 import com.example.zippickT.domain.house.exception.HouseNotFoundException;
@@ -75,7 +75,7 @@ public class GptRankingServiceImpl implements GptRankingService {
             UserHouseInfo house = houses.stream()
                     .filter(h-> h.getId().equals(houseId))
                     .findFirst()
-                    .orElseThrow(TranslationHouseNotFoundException::new);
+                    .orElseThrow(RecommendationHouseNotFoundException::new);
 
             String rent = checkRent(house);
 
