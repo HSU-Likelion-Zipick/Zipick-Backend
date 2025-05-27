@@ -22,7 +22,9 @@ public class GptController {
 
     @PutMapping("/{user_id}/ranking")
     public ResponseEntity<SuccessResponse<?>> houseRanking(@PathVariable Long user_id) {
+        System.out.println("ranking API가 호출되었습니다.");
         GptHouseRankingRes res = gptRankingService.recommendByGpt(user_id);
+        System.out.println("ranking API가 반환되었습니다.");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(SuccessResponse.ok(res));
@@ -31,6 +33,7 @@ public class GptController {
 
     @GetMapping("/{user_id}/similar")
     public ResponseEntity<SuccessResponse<?>> similar(@PathVariable Long user_id) {
+        System.out.println("similar API가 호출되었습니다.");
         List<SimilarUserReq> similarUsers = gptSimilarService.getSimilarUser(user_id);
 
         //Test Log 확인용 코드
@@ -40,6 +43,7 @@ public class GptController {
 
         //Test Log 확인용 코드
         System.out.println("뽑아온 유저의 집 정보" +similarUserHouseResList);
+        System.out.println("similar API가 반환되었습니다.");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(SuccessResponse.ok(similarUserHouseResList));
