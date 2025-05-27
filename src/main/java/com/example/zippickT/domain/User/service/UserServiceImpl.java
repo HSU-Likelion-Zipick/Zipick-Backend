@@ -1,13 +1,11 @@
 package com.example.zippickT.domain.User.service;
 
 import com.example.zippickT.domain.User.entity.*;
-import com.example.zippickT.domain.User.exception.GenderNotFoundException;
-import com.example.zippickT.domain.User.exception.JobNotFoundException;
-import com.example.zippickT.domain.User.exception.LifeStyleNotFoundException;
-import com.example.zippickT.domain.User.exception.TransportNotFoundException;
+import com.example.zippickT.domain.User.exception.*;
 import com.example.zippickT.domain.User.repository.UserRepository;
 import com.example.zippickT.domain.User.web.dto.CreateUserReq;
 import com.example.zippickT.domain.User.web.dto.CreateUserRes;
+import com.example.zippickT.domain.User.web.dto.UserNickNameRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,5 +68,14 @@ public class UserServiceImpl implements UserService {
 
         Member savedMember = userRepository.save(member);
         return new CreateUserRes(savedMember.getId());
+    }
+
+    @Override
+    public UserNickNameRes getNickName(Long userId) {
+        Member user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+
+        String nickname = user.getNickname();
+        return new UserNickNameRes(userId , nickname);
     }
 }
