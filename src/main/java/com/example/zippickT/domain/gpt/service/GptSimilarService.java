@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface GptService {
+public interface GptSimilarService {
     List<SimilarUserReq> getSimilarUser(Long userId);
 
     List<SimilarUserHouseRes> getSimilarUserHouseData(List<SimilarUserReq> similarUsers);

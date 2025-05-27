@@ -1,6 +1,7 @@
 package com.example.zippickT.domain.house.web.controller;
 
 import com.example.zippickT.domain.house.service.UserHouseService;
+import com.example.zippickT.domain.house.web.dto.CountHouseDateRes;
 import com.example.zippickT.domain.house.web.dto.CreateHouseDataReq;
 import com.example.zippickT.domain.house.web.dto.CreateHouseDataRes;
 import com.example.zippickT.global.response.SuccessResponse;
@@ -25,5 +26,13 @@ public class UserHouseController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(SuccessResponse.ok(createHouseDataRes));
+    }
+
+    @GetMapping("/{user_id}/HouseCount")
+    public ResponseEntity<SuccessResponse<?>> getUserHouseCount(@PathVariable Long user_id){
+        CountHouseDateRes createHouseDateRes = userHouseService.countHouse(user_id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.ok(createHouseDateRes));
     }
 }
