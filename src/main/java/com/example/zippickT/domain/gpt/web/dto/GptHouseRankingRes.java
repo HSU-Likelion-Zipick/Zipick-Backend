@@ -1,6 +1,8 @@
 package com.example.zippickT.domain.gpt.web.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -9,6 +11,8 @@ public record GptHouseRankingRes(
         String nickname,
         List<HouseInfoSummeryDto> recommend
 ) {
+    @Getter
+    @Setter
     @AllArgsConstructor
     public static class HouseInfoSummeryDto {
         private int rank;

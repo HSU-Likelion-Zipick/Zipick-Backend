@@ -6,10 +6,12 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class GptHouseRankingReq {
@@ -36,6 +38,7 @@ public class GptHouseRankingReq {
         private LifeStyle lifestyle_pattern;
     }
 
+    @Data
     @NoArgsConstructor
     @AllArgsConstructor
     public static class UserHouseInfoDto{

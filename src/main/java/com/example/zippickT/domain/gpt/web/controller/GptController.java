@@ -19,8 +19,8 @@ public class GptController {
     private final GptRankingService gptRankingService;
 
     @GetMapping("/{user_id}/ranking")
-    public ResponseEntity<SuccessResponse<?>> houseRanking(@PathVariable Long userId) {
-        GptHouseRankingRes res = gptRankingService.recommendByGpt(userId);
+    public ResponseEntity<SuccessResponse<?>> houseRanking(@PathVariable Long user_id) {
+        GptHouseRankingRes res = gptRankingService.recommendByGpt(user_id);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(SuccessResponse.ok(res));

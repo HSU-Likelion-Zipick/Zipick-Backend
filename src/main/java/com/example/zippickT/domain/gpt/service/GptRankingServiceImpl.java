@@ -58,8 +58,9 @@ public class GptRankingServiceImpl implements GptRankingService {
         //Gpt 프롬프트 생성
         String prompt = buildPrompt(user, houses);
 
-        //gpt 요청
+        System.out.println("callGpt() 시작, 프롬프트 길이: " + prompt.length());
         String gptResponse = callGpt(prompt);
+        System.out.println("GPT 응답 받은 내용: " + gptResponse);
 
         //gpt 응답에서 순위 저장 Map<집Id, 순위>
         List<Map.Entry<Long,Integer>> ranking = GptResRanking(gptResponse);
@@ -111,7 +112,7 @@ public class GptRankingServiceImpl implements GptRankingService {
     //Map.entry는 하나의 키, 값을 쌍으로 나타냄
     private List<Map.Entry<Long, Integer>> GptResRanking(String content) {
         //숫자 + "위: " + 숫자 형태를 찾음
-        Pattern pattern = Pattern.compile("(\\d+)위 : (\\d+)");
+        Pattern pattern = Pattern.compile("(\\d+)위:\\s*집 스펙의 id (\\d+)");
         Matcher matcher = pattern.matcher(content);
         List<Map.Entry<Long, Integer>> result = new ArrayList<>();
 
@@ -180,6 +181,7 @@ public class GptRankingServiceImpl implements GptRankingService {
 
         [요청]
         사용자가 작성한 %d개의 집 스펙 중에 사용자 정보를 기준으로 사용자에게 가장 적합한 집 스펙의 순위를 추천해주세요.
+        이유나 설명은 포함하지 않습니다.
         형식:
         %s
         """, userInfo, houseList, recommendCount,
