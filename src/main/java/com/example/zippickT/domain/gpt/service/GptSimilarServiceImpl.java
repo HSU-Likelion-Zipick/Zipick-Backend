@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class GptServiceImpl implements GptService {
+public class GptSimilarServiceImpl implements GptSimilarService {
 
     private final UserRepository userRepository;
     private final UserHouseInfoRepository userHouseInfoRepository;
