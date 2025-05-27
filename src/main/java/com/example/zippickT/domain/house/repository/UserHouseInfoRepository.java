@@ -10,4 +10,7 @@ import java.util.List;
 @Repository
 public interface UserHouseInfoRepository extends JpaRepository<UserHouseInfo, Long> {
     List<UserHouseInfo> findByMemberId(Long userId);
+
+    //userId로 집개수 세기
+    int countByMemberId(Long userId);
 }

@@ -7,6 +7,7 @@ import com.example.zippickT.domain.house.entity.*;
 import com.example.zippickT.domain.house.exception.ChargeNotFoundException;
 import com.example.zippickT.domain.house.exception.OptionNotFoundException;
 import com.example.zippickT.domain.house.repository.*;
+import com.example.zippickT.domain.house.web.dto.CountHouseDateRes;
 import com.example.zippickT.domain.house.web.dto.CreateHouseDataReq;
 import com.example.zippickT.domain.house.web.dto.CreateHouseDataRes;
 import lombok.RequiredArgsConstructor;
@@ -69,5 +70,10 @@ public class UserHouseServiceImp implements UserHouseService {
 
         return new CreateHouseDataRes(res.getId(),res.getMember().getId());
     }
-    //Reposity 가져와서 의존성 주입해야함.
+
+    @Override
+    public CountHouseDateRes countHouse(Long userId) {
+        int cnt = userHouseInfoRepository.countByMemberId(userId);
+        return new CountHouseDateRes(userId, cnt);
+    }
 }
