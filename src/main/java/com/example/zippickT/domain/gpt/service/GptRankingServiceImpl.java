@@ -182,6 +182,11 @@ public class GptRankingServiceImpl implements GptRankingService {
         [요청]
         사용자가 작성한 %d개의 집 스펙 중에 사용자 정보를 기준으로 사용자에게 가장 적합한 집 스펙의 순위를 추천해주세요.
         이유나 설명은 포함하지 않습니다.
+        
+        반드시 다음 형식을 따르세요. "집 스펙의 id"라는 문구를 포함해 주세요.
+        예시:
+        1위: 집 스펙의 id 25
+        2위: 집 스펙의 id 13
         형식:
         %s
         """, userInfo, houseList, recommendCount,
