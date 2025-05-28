@@ -5,7 +5,6 @@
 - 언어 : Java 17
 - 프레임워크 : Spring Boot 3.4.5
 - DB : MySql
-- AI API :
 - API 문서 : Swagger
 
 <br>
