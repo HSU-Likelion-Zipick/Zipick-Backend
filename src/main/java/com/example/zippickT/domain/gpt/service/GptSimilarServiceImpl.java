@@ -85,6 +85,7 @@ public class GptSimilarServiceImpl implements GptSimilarService {
         // OpenAI Chat API 호출
         String response = restTemplate.postForObject(gptUrl, request, String.class);
         System.out.println(response);
+
         // 응답에서 유사 userId 추출
         try {
             //JsonNode 객체 리턴
